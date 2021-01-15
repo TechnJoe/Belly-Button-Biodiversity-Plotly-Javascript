@@ -1,1 +1,1 @@
-# Belly-Button-Biodiversity-Plotly-Javscript
+# Belly-Button-Biodiversity-Plotly-Javascript
