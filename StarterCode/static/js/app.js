@@ -46,6 +46,11 @@ function getPlots(id) {
                 b: 30
             }
         };
+         // create the bar plot
+        Plotly.newPlot("bar", data, layout);
+        // The bubble chart
+    
+    
 
 
     })
