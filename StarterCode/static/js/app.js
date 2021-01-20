@@ -20,6 +20,20 @@ function getPlots(id) {
         // get the top 10 labels for the plot
         var labels =  sampledata.samples[0].otu_labels.slice(0,10);
         console.log(`OTU_labels: ${labels}`)
-    }
+        var trace = {
+            x: sampleValues,
+            y: OTU_id,
+            text: labels,
+            marker: {
+            color: 'blue'},
+            type:"bar",
+            orientation: "h",
+        };
+        
+        // create data variable
+        var data = [trace];
+
+
+    })
 
 }
