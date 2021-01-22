@@ -102,12 +102,15 @@ function getPlots(id) {
             })
         }
 
-        function optionChanged(id){
-            getPlots(id);
-        } 
+        // function optionChanged(id){
+        //     getPlots(id);
+        // } 
     
         populateDropdown();
     
+        d3.json("samples.json").then ((sampledata) =>{
+            console.log(sampledata)
+            samples = sampledata.samples;
     
          // The bubble chart
         var trace1 = {
@@ -136,11 +139,13 @@ function getPlots(id) {
         // create the bubble plot
         Plotly.newPlot("bubble", data1, layout_2); 
     
-    
+        });
  
  // create the function for the change event
  function optionChanged(id) {
     getPlots(id);
     getDemoInfo(id);
 }
-
+ // call the functions to display the data and the plots to the page
+ getPlots(data.names[0]);
+ getDemoInfo(data.names[0])
