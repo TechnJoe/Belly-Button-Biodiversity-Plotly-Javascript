@@ -1,4 +1,4 @@
-function getPlots(id) {
+function getbarPlots(id) {
     //Read samples.json
     d3.json("samples.json").then ((sampledata) =>{
         console.log(sampledata)
@@ -46,7 +46,9 @@ function getPlots(id) {
     
             // create the bar plot
         Plotly.newPlot("bar", data, layout);
-            // The bubble chart
+            
+        
+        // The bubble chart
             // var trace1 = {
             //     x: sampledata.samples[0].otu_ids,
             //     y: sampledata.samples[0].sample_values,
@@ -59,10 +61,10 @@ function getPlots(id) {
     
             // };
     });
-    
-    }  
-           
-         //create the the funtion to get the necessary metadata
+    }
+      
+       
+         //create the funtion to get the necessary metadata
          // read the json file to get data
         function getDemoInfo(id) {
             d3.json("samples.json").then((data)=> {
@@ -80,7 +82,7 @@ function getPlots(id) {
                // empty the demographic info panel each time before getting new id info
                  demographicInfo.html("");
           
-               // grab the necessary demographic data data for the id and append the info to the panel
+               // Bring in the necessary demographic data for the id and append the info to the panel
                   Object.entries(result).forEach((key) => {   
                       demographicInfo.append("h5").text(key[0].toUpperCase() + ": " + key[1] + "\n");    
                   });
@@ -95,36 +97,41 @@ function getPlots(id) {
             d3.json("samples.json").then( (data)=> {
                 //get ID data
                 var names = data.names; 
-
+                getPlots(data.names[0]);
+                getDemoInfo(data.names[0])
+                getbarPlots(data.names[0])  
                 names.forEach(function(name){
                     dropdown.append("option").text(name).property("value",name);
                 })
             })
         }
+    
 
-        // function optionChanged(id){
-        //     getPlots(id);
-        // } 
+         
     
         populateDropdown();
-    
-        d3.json("samples.json").then ((sampledata) =>{
-            console.log(sampledata)
-            samples = sampledata.samples;
+
+        
+        
     
          // The bubble chart
-        var trace1 = {
-            x: sampledata.samples[0].otu_ids,
-            y: sampledata.samples[0].sample_values,
-            mode: "markers",
-            marker: {
-                size: sampledata.samples[0].sample_values,
-                 color: sampledata.samples[0].otu_ids
-            },
-            text:  sampledata.samples[0].otu_labels
+         function getPlots(id) {
+            d3.json("samples.json").then ((sampledata) =>{
+                console.log(sampledata)
+                samples = sampledata.samples;
+                filtereddata = samples.filter(s => s.id == id ); 
+            var trace1 = {
+                x: filtereddata[0].otu_ids,
+                y: filtereddata[0].sample_values,
+                mode: "markers",
+                marker: {
+                    size:filtereddata[0].sample_values,
+                    color: filtereddata[0].otu_ids
+                    },
+                text:  filtereddata[0].otu_labels
 
-        };
-
+                };
+            
         // set the layout for the bubble plot
 
         var layout_2 = {
@@ -137,15 +144,22 @@ function getPlots(id) {
         var data1 = [trace1];
 
         // create the bubble plot
-        Plotly.newPlot("bubble", data1, layout_2); 
+        Plotly.newPlot("bubble", data1, layout_2);
+    });  
     
-        });
+}    
+
  
- // create the function for the change event
- function optionChanged(id) {
-    getPlots(id);
-    getDemoInfo(id);
-}
- // call the functions to display the data and the plots to the page
- getPlots(data.names[0]);
- getDemoInfo(data.names[0])
+        // create the function for the change event
+            function optionChanged(id) {
+                getPlots(id);
+                getDemoInfo(id);
+                getbarPlots(id);
+            }
+        // call the functions to display the data and the plots to the page
+        
+        
+    
+    
+    
+  
